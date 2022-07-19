@@ -1,6 +1,7 @@
 import os
 import json
 import aircv
+import time
 f = open("attributes.json", "r")
 att = json.loads(f.read())
 f.close()
@@ -33,5 +34,11 @@ def matchImg(imgobj,confidencevalue=0.93):
     else:
         return (0,0)
 
-#screenshot()
-#print(matchImg("Ending"))
+def waitingFor(imgobj, length=1):
+    while (matchImg(imgobj) == (0, 0)):
+        print("Continue Searching For: " + imgobj)
+        time.sleep(length)
+    tap2(matchImg(imgobj))
+
+screenshot()
+#print(matchImg("WithinTheWeek"))

@@ -1,7 +1,6 @@
 import time
-import os
 
-from ..androidController import tap, tap2, swipe, screenshot, matchImg
+from androidController import tap, tap2, swipe, screenshot, matchImg
 
 state = 0
 
@@ -172,4 +171,4 @@ def RougeOrgEarner():
                 time.sleep(0.5)
         time.sleep(5)
 
-RougeOrgEarner()
+#RougeOrgEarner()
