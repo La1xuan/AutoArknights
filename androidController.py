@@ -47,6 +47,6 @@ def waitingFor(imgobj, length=1, cur=0):
     tap2(matchImg(imgobj))
 
 #screenshot()
-print(matchImg("Banner"))
+#print(matchImg("Banner"))
 #tap(1357, 713)
 
