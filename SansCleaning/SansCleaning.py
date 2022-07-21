@@ -1,5 +1,5 @@
 from time import sleep
-from androidController import tap, tap2, swipe, screenshot, matchImg, waitingFor
+from androidController import tap, tap2, matchImg, waitingFor
 def SansCleaning(status):
     status = int(status)
     waitingFor("Home")

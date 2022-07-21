@@ -1,4 +1,4 @@
-from androidController import tap, tap2, swipe, screenshot, matchImg, waitingFor
+from androidController import tap, tap2, matchImg, waitingFor
 from time import sleep
 from os import popen
 def intro():

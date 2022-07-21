@@ -1,5 +1,5 @@
 import time
-from androidController import tap, tap2, swipe, screenshot, matchImg, waitingFor
+from androidController import tap, matchImg, waitingFor
 
 def BaseClear():
     waitingFor("Base")

@@ -1,5 +1,4 @@
-import time
-
+from time import sleep
 from androidController import tap, tap2, swipe, screenshot, matchImg
 
 state = 0
@@ -36,7 +35,7 @@ Preset = [
 
 def deploy(X, Y, dirX, dirY):
     tap(1500, 780)
-    time.sleep(0.5)
+    sleep(0.5)
     swipe(1500, 800, X, Y)
     swipe(X, Y, X + dirX * 300, Y + dirY * 300)
     tap(1175, 65)
@@ -61,7 +60,7 @@ def fight(num=0):
     #划到战利品的最右侧
     swipe(1230, 425, 930, 425)
     tap(1175, 65)
-    time.sleep(1)
+    sleep(1)
     screenshot()
 
     res = matchImg("NoThanks", confidencevalue=0.8)
@@ -75,12 +74,12 @@ def fight(num=0):
     else:
         print(res)
         tap2(res)
-        time.sleep(5)
+        sleep(5)
         tap(res[0] + 70 , res[1] + 245)
 
 def postfight():
     if state == 0:
-        time.sleep(10)
+        sleep(10)
         randomPhase()
 
 def randomPhase():
@@ -91,13 +90,13 @@ def randomPhase():
         if Phs3 != (0, 0):
             Phs2 = Phs3
         tap2(Phs2)
-        time.sleep(5)
+        sleep(5)
         for j in range(10):
             tap(1520, 615)
-            time.sleep(0.5)
+            sleep(0.5)
         for j in range(5):
             tap(1520, 509)
-            time.sleep(0.5)
+            sleep(0.5)
     else:
         Phs2 = matchImg("FightingHard")
         Phs3 = matchImg("Fighting")
@@ -105,32 +104,32 @@ def randomPhase():
             if Phs3 != (0, 0):
                 Phs2 = Phs3
                 tap2(Phs2)
-                time.sleep(5)
+                sleep(5)
                 tap(1520, 615)
-                time.sleep(5)
+                sleep(5)
                 tap(1460, 780)
-                time.sleep(13)
+                sleep(13)
                 tap(1375, 65) #二倍速
-                time.sleep(3)
+                sleep(3)
                 fight(0)
 
 def saving():
     if state == 0:
         tap(1075,400)
-        time.sleep(5)
+        sleep(5)
         tap(1520, 615)
-        time.sleep(5)
+        sleep(5)
         tap(630, 250)
-        time.sleep(5)
+        sleep(5)
         tap(820, 450)
-        time.sleep(5)
+        sleep(5)
         for j in range(20):
             tap(1230, 620)
-            time.sleep(0.5)
+            sleep(0.5)
 
 def Introing():
     for i in Preset:
-        time.sleep(4)
+        sleep(4)
         tap2(i)
 
 def RougeOrgEarner():
@@ -138,9 +137,9 @@ def RougeOrgEarner():
         print("I am starting a new term")
         Introing()
         print("Getting in the first fight")
-        time.sleep(13)
+        sleep(13)
         tap(1375, 65) #二倍速
-        time.sleep(3)
+        sleep(3)
         fight()
         for i in range(5):
             postfight()
@@ -154,21 +153,21 @@ def RougeOrgEarner():
         state = 0
         if matchImg("QuitPrevent") == (0, 0):
             tap(50, 40)
-            time.sleep(5)
+            sleep(5)
             screenshot()
             while matchImg("Exit", confidencevalue=0.8) != (0, 0):
                 print(matchImg("Exit", confidencevalue=0.8))
                 tap2(matchImg("Exit", confidencevalue=0.8))
-                time.sleep(5)
+                sleep(5)
                 screenshot()
             tap(1456, 431)
-            time.sleep(5)
+            sleep(5)
             tap(1050, 620)
-            time.sleep(30)
+            sleep(30)
             tap(800, 745)
             for j in range(10):
                 tap(1000, 820)
-                time.sleep(0.5)
-        time.sleep(5)
+                sleep(0.5)
+        sleep(5)
 
 #RougeOrgEarner()
