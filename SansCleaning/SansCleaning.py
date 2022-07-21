@@ -1,6 +1,7 @@
 from time import sleep
 from androidController import tap, tap2, swipe, screenshot, matchImg, waitingFor
 def SansCleaning(status):
+    status = int(status)
     waitingFor("Home")
     while (matchImg("Selection") == (0, 0)):
         print("Continue Searching For: Selection")
@@ -23,7 +24,7 @@ def CheckSans(status):
     #(978, 719) refuse
     #Modes:
     #0: Use Nothing
-    #1: Unimplemented, targeted for within a day
+    #1: targeted for within a day
     #2: Use only within a week
     #3: Use only res
     #4: Use org
@@ -36,14 +37,12 @@ def CheckSans(status):
         tap2(matchImg("Set"))
         print("important Line executed")
         return 2
-    """
-    if matchImg("WithinTheWeek") != (0, 0):
+    if matchImg("WithinTwoDays") != (0, 0):
         if status > 0:
             tap(1357, 713)
             waitingFor("Ready")
             waitingFor("Set")
             return 1
-    """
     if matchImg("WithinTheWeek") != (0, 0):
         if status > 1:
             tap(1357, 713)

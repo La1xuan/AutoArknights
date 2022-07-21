@@ -8,6 +8,9 @@ f.close()
 if att[0] != 1008:
     exit()
 
+def recAtt():
+    return att
+
 enumeratorDir = att[1]
 if (str(os.popen("tasklist").readlines()).find("dnplayer.exe") == -1):
     os.popen("D:" + "&" + "cd " + enumeratorDir + "&" + "start dnplayer.exe")
@@ -46,7 +49,7 @@ def waitingFor(imgobj, length=1, cur=0):
             return
     tap2(matchImg(imgobj))
 
-#screenshot()
-#print(matchImg("Banner"))
+screenshot()
+#print(matchImg("Dist1"))
 #tap(1357, 713)
 
