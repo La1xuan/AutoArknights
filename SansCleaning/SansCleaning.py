@@ -1,9 +1,20 @@
 from time import sleep
-from androidController import tap, tap2, matchImg, waitingFor
+from androidController import tap, tap2, matchImg, waitingFor, failSafe, timeoutSetting
 def SansCleaning(status):
     status = int(status)
-    waitingFor("Home")
+    cur = 0
+    while (matchImg("Home") == (0, 0)):
+        print("Continue Searching For: Home")
+        tap(80, 50)
+        sleep(1)
+        cur += 1
+    tap2(matchImg("Home"))
+
+    cur = 0
     while (matchImg("Selection") == (0, 0)):
+        if cur > timeoutSetting:
+            failSafe()
+        cur += 1
         print("Continue Searching For: Selection")
     sleep(1)
     tap(1400, 730)
@@ -19,7 +30,7 @@ def fight(status):
     tap2(matchImg("Ending"))
     fight(status)
 
-def CheckSans(status):
+def CheckSans(status,cur=0):
     #(1357, 713) use it
     #(978, 719) refuse
     #Modes:
@@ -29,10 +40,12 @@ def CheckSans(status):
     #3: Use only res
     #4: Use org
     #Red state is needed
+    if cur > timeoutSetting:
+        failSafe()
     if matchImg("Ready") != (0, 0):
         #Rare Case
         tap2(matchImg("Ready"))
-        return CheckSans(status)
+        return CheckSans(status,cur=cur+1)
     if matchImg("Set") != (0, 0):
         tap2(matchImg("Set"))
         print("important Line executed")

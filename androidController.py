@@ -1,4 +1,4 @@
-from os import popen
+from os import popen, path, getcwd
 from json import loads
 from aircv import imread, find_template
 from time import sleep
@@ -8,6 +8,8 @@ att = loads(f.read())
 f.close()
 if att[0] != 1008:
     exit()
+
+timeoutSetting = 100
 
 def recAtt():
     return att
@@ -30,6 +32,7 @@ def swipe(X1, Y1, X2, Y2):
 
 def screenshot():
     popen("D:" + "&" + "cd " + enumeratorDir + "&" + "adb shell screencap //sdcard//Pictures//curScreen.png")
+    sleep(1)
 
 def matchImg(imgobj,confidencevalue=0.93):
     screenshot()
@@ -46,10 +49,21 @@ def waitingFor(imgobj, length=1, cur=0):
         print("Continue Searching For: " + imgobj)
         sleep(length)
         cur += 1
-        if cur > 100:
-            return
+        if cur > timeoutSetting:
+            failSafe()
     tap2(matchImg(imgobj))
 
+def failSafe():
+    popen("taskkill /f /im dnplayer.exe")
+    sleep(10)
+    popen("start " + path.abspath(getcwd()) + "\\main.py")
+    sleep(5)
+    exit()
+
+def timeout():
+    return timeoutSetting
+
+#failSafe()
 #screenshot()
 #print(matchImg("Dist1"))
 #tap(1357, 713)
