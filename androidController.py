@@ -2,6 +2,8 @@ from os import popen, path, getcwd
 from json import loads
 from aircv import imread, find_template
 from time import sleep
+from pyautogui import confirm
+from setting import setParam
 
 f = open("attributes.json", "r")
 att = loads(f.read())
@@ -11,13 +13,8 @@ if att[0] != 1008:
 
 timeoutSetting = 100
 
-def recAtt():
-    return att
-
 enumeratorDir = att[1]
-if (str(popen("tasklist").readlines()).find("dnplayer.exe") == -1):
-    popen("D:" + "&" + "cd " + enumeratorDir + "&" + "start dnplayer.exe")
-    sleep(30)
+
 curScreen = enumeratorDir + "\\curScreen.png"
 
 #Helper functions, which controls aircv and adb shells.
@@ -60,11 +57,32 @@ def failSafe():
     sleep(5)
     exit()
 
+
+def recAtt():
+    return att
+
 def timeout():
     return timeoutSetting
+
+def booting():
+    global timeoutSetting, curScreen, enumeratorDir, att
+    if (str(popen("tasklist").readlines()).find("dnplayer.exe") == -1):
+        popen("D:" + "&" + "cd " + enumeratorDir + "&" + "start dnplayer.exe")
+        sleep(3)
+    res = confirm(text="Click OK if you want to change setting \n if you don't want to change setting, \n don't click until the enumerator is fully operational",timeout=60000)
+    print(res)
+    if res == "OK":
+        setParam()
+        f = open("attributes.json", "r")
+        att = loads(f.read())
+        f.close()
+        enumeratorDir = att[1]
+        curScreen = enumeratorDir + "\\curScreen.png"
+        print(att)
+    return
 
 #failSafe()
 #screenshot()
 #print(matchImg("Dist1"))
 #tap(1357, 713)
-
+#booting()

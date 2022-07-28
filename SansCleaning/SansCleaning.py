@@ -1,8 +1,12 @@
 from time import sleep
 from androidController import tap, tap2, matchImg, waitingFor, failSafe, timeoutSetting
 from json import loads, dumps
+
+stat = 0
 def SansCleaning(status):
-    status = int(status)
+    global stat
+    stat = int(status)
+
     cur = 0
     while (matchImg("Home") == (0, 0)):
         print("Continue Searching For: Home")
@@ -19,19 +23,19 @@ def SansCleaning(status):
         print("Continue Searching For: Selection")
     sleep(1)
     tap(1400, 730)
-    fight(status)
+    fight()
 
-def fight(status):
+def fight():
     waitingFor("Ready")
-    if CheckSans(status) == 0:
+    if CheckSans() == 0:
         return
     #waitingFor("Set")
     waitingFor("Ending", 10)
     sleep(2)
     tap2(matchImg("Ending"))
-    fight(status)
+    fight()
 
-def CheckSans(status,cur=0):
+def CheckSans(cur=0):
     #(1357, 713) use it
     #(978, 719) refuse
     #Modes:
@@ -41,14 +45,15 @@ def CheckSans(status,cur=0):
     #3: Use only res
     #4: Use org
     #Red state is needed
+    global stat
     print("status:")
-    print(status)
+    print(stat)
     if cur > timeoutSetting:
         failSafe()
     if matchImg("Ready") != (0, 0):
         #Rare Case
         tap2(matchImg("Ready"))
-        return CheckSans(status,cur=cur+1)
+        return CheckSans(cur=cur+1)
     if matchImg("Set") != (0, 0):
         print("Set found")
         tap2(matchImg("Set"))
@@ -57,7 +62,7 @@ def CheckSans(status,cur=0):
     if matchImg("WithinTwoDays",confidencevalue=0.99) != (0, 0):
         print("WithinTwoDays found")
         #sleep(10)
-        if status > 0:
+        if stat > 0:
             print("WithinTwoDays exec")
             tap(1357, 713)
             waitingFor("Ready")
@@ -66,7 +71,7 @@ def CheckSans(status,cur=0):
     if matchImg("WithinTheWeek",confidencevalue=0.99) != (0, 0):
         print("WithinTheWeek found")
         #sleep(10)
-        if status > 1:
+        if stat > 1:
             print("WithinTheWeek exec")
             tap(1357, 713)
             waitingFor("Ready")
@@ -75,7 +80,7 @@ def CheckSans(status,cur=0):
     if matchImg("UseBoost",confidencevalue=0.99) != (0, 0):
         print("UseBoost found")
         #sleep(10)
-        if status > 2:
+        if stat > 2:
             print("UseBoost exec")
             tap(1357, 713)
             waitingFor("Ready")
@@ -83,14 +88,14 @@ def CheckSans(status,cur=0):
             return 1
     if matchImg("BoostWithOrg",confidencevalue=0.99) != (0, 0):
         print("BoostWithOrg found")
-        print("Org budget: " + str(status - 3))
+        print("Org budget: " + str(stat - 3))
         #sleep(10)
-        if status > 3:
-            status -= 1
+        if stat > 3:
+            stat -= 1
             f = open("attributes.json", "r")
             attributes = loads(f.read())
             f.close()
-            attributes[2] = status
+            attributes[2] = stat
             f = open("attributes.json", "w+")
             f.write(dumps(attributes))
             f.close()
